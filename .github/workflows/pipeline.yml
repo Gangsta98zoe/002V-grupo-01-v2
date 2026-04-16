@@ -1,0 +1,28 @@
+name: "IaC Quality and Security Analysis"
+on:
+  pull_request:
+    [cite_start]branches: [ "main" ] # Se activa solo en Pull Request a main [cite: 71]
+
+jobs:
+  iac-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Código
+        uses: actions/checkout@v4
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - [cite_start]name: 1. Análisis Estático (TFLint) [cite: 73]
+        run: |
+          tflint --init
+          tflint
+
+      - [cite_start]name: 2. Análisis de Seguridad (Checkov) [cite: 75]
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          framework: terraform
+
+      - [cite_start]name: 3. Validación Terraform [cite: 76]
+        run: terraform init -backend=false && terraform validate
