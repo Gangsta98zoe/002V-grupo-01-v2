@@ -1,7 +1,7 @@
 name: "IaC Quality and Security Analysis"
 on:
   pull_request:
-    [cite_start]branches: [ "main" ] # Se activa solo en Pull Request a main [cite: 71]
+      branches: [ "main" ] # Se activa solo en Pull Request a main [cite: 71]
 
 jobs:
   iac-pipeline:
